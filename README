@@ -1,0 +1,88 @@
+S3 README 
+=========
+
+Copyright (c) 2012 Anton Bondarenko
+
+
+
+1. INTRODUCTION
+
+S3 is a simple proxy-style SIP-to-H.323 gateway.
+
+
+
+2. LICENSE NOTES
+
+S3 is licensed under MPL2.0 (http://mozilla.org/MPL/2.0/). It includes some
+modifications of OPAL and therefore in this part is 'incompatible with
+secondary licenses' according to MPL terminology. Necessary notes put in the
+preambles of the source files containing borrowed code.
+
+
+
+3. CURRENT STATE
+
+S3 is under development at the moment (it is not released yet!). To be more precise
+it is a in check-of-concept stage. 
+
+Currently it is able to handle only H323-to-SIP calls and only with fast connect 
+enabled.
+
+So far S3 supports only G.711/G.722 for audio and H.264 for video (although it doesn't
+process media and even doesn't provide bypass it has to provide the media
+description translation/negotiation between H.245 and SDP).
+
+
+
+4. PREREQUISITES
+
+- PTLIB 2.10.5 + OPAL 3.10.5 must be installed 
+- g++ tool-chain
+
+
+
+5. RUNNING S3
+
+- download and unpack S3; run make; run ./s3
+
+The command-line keys are:
+
+-v vv ... vvvvv  verbosity (default behavior = silent) 
+-p - SIP port (default = 5060) 
+-r - route string (default = "")
+
+By default S3 sends all incoming H.323 calls to <user-name>@localhost:5060. This
+can be changed by providing another route string (which must be prepared in OPAL
+format - see AddRouteEntry method documentation on http://www.opalvoip.org/docs
+/opal-v3_10/dc/d62/classOpalManager.html)
+
+E.g. to route all calls to user1@192.168.0.108 you can use
+"h323:.*=sip:user1@192.168.0.108" and to provide routing to localhost with the
+original user-name (H.323 id) use "h323:.*=sip:da@127.0.0.1" (which is default
+route).
+	
+
+
+6. ROADMAP
+
+More or less in undefined order and timeframe the following features are
+considered for implementation:
+
+- Refactoring of OPAL integration part.
+- Adding SIP-to H.323 calls.
+- Adding proper handling of RoundTripDelay.
+- Adding translation of intraframe requests.
+- Implementing support for 'slow' connect.
+- Implementing other scenarious outside basic successful call (reINVITEs etc.).
+- Extending set of services (DTMF, messaging, H.239 etc.).
+- Extending of media formats set.
+- Implementing media bypass and traversal.
+- Providing advanced config (flexible routing and smart media negotiation).
+- Demonize.
+- ?
+
+
+
+7. PROJECT HOME
+
+http://sourceforge.net/p/s-3/
